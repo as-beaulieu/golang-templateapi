@@ -1,10 +1,12 @@
 package main
 
 import (
+	"TemplateApi/src/dao"
 	"TemplateApi/src/server"
 	"TemplateApi/src/service"
 	"bufio"
 	"fmt"
+	"github.com/joho/godotenv"
 	"io"
 	"log"
 	"net"
@@ -18,13 +20,24 @@ var (
 )
 
 func main() {
+	err := godotenv.Load()
 	example := os.Getenv("EXAMPLE")
 	fmt.Println(example)
 
 	errors = make(chan error)
 	tcpResponse = make(chan string)
 
-	svc := service.ServiceBuilder{}.Build()
+	dbport := os.Getenv("POSTGRES_PORT")
+	port, err := strconv.Atoi(dbport)
+	postgres := dao.PostgresBuilder{}.
+		SetUser(os.Getenv("POSTGRES_USER")).
+		SetPassword(os.Getenv("POSTGRES_PASSWORD")).
+		SetHost(os.Getenv("POSTGRES_HOST")).
+		SetPort(port).
+		SetDbName(os.Getenv("POSTGRES_HOST")).
+		Build()
+	svc := service.ServiceBuilder{}.WithPostgres(postgres).
+		Build()
 
 
 	//http server
@@ -50,7 +63,7 @@ func main() {
 		}
 	}()
 
-	err := <- errors
+	err = <- errors
 	close(errors)
 	if err != nil {
 		log.Fatal("error: ", err)

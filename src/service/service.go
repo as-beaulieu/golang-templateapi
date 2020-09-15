@@ -1,6 +1,9 @@
 package service
 
-import "TemplateApi/src/models"
+import (
+	"TemplateApi/src/dao"
+	"TemplateApi/src/models"
+)
 
 type Service interface {
 	//PublicFunctionName(input) (output, error)
@@ -11,6 +14,7 @@ type Service interface {
 
 type service struct {
 	//package	PackageType
+	postgres dao.DAO
 }
 
 type ServiceBuilder struct {
@@ -22,6 +26,12 @@ type ServiceBuilder struct {
 //	a.package = package
 //	return a
 //}
+
+func (sb ServiceBuilder) WithPostgres(dao dao.DAO) ServiceBuilder {
+	a := sb
+	a.postgres = dao
+	return a
+}
 
 func (sb ServiceBuilder) Build() *service {
 	return &sb.service
