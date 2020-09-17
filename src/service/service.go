@@ -27,7 +27,7 @@ type ServiceBuilder struct {
 //	return a
 //}
 
-func (sb ServiceBuilder) WithPostgres(dao dao.DAO) ServiceBuilder {
+func (sb ServiceBuilder) WithPostgres(dao dao.DAO) ServiceBuilder { //Point to Interface of package to be injected
 	a := sb
 	a.postgres = dao
 	return a

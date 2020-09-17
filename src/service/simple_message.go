@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-func (s service)CreateSimpleMessage(message models.SimpleMessage) (*models.SimpleMessageResponse, error) {
+func (s service) CreateSimpleMessage(message models.SimpleMessage) (*models.SimpleMessageResponse, error) {
 	newFile, err := os.Create("test.txt")
 	if err != nil {
 		fmt.Println("failure creating new file", newFile.Name())
@@ -29,5 +29,9 @@ func (s service)CreateSimpleMessage(message models.SimpleMessage) (*models.Simpl
 
 	}
 
-	return nil, nil
+	return &models.SimpleMessageResponse{
+		ID:      message.ID,
+		Message: message.Message,
+		Error:   nil,
+	}, nil
 }
