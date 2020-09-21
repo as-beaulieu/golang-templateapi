@@ -3,6 +3,7 @@ package service
 import (
 	"TemplateApi/src/dao"
 	"TemplateApi/src/models"
+	"go.uber.org/zap"
 )
 
 type Service interface {
@@ -14,6 +15,7 @@ type Service interface {
 
 type service struct {
 	//package	PackageType
+	logger   zap.Logger
 	postgres dao.DAO
 }
 
@@ -26,6 +28,12 @@ type ServiceBuilder struct {
 //	a.package = package
 //	return a
 //}
+
+func (sb ServiceBuilder) WithLogger(logger zap.Logger) ServiceBuilder {
+	a := sb
+	a.logger = logger
+	return a
+}
 
 func (sb ServiceBuilder) WithPostgres(dao dao.DAO) ServiceBuilder { //Point to Interface of package to be injected
 	a := sb

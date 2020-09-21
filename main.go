@@ -2,6 +2,7 @@ package main
 
 import (
 	"TemplateApi/src/dao"
+	"TemplateApi/src/logging"
 	"TemplateApi/src/server"
 	"TemplateApi/src/service"
 	"bufio"
@@ -15,7 +16,7 @@ import (
 )
 
 var (
-	errors chan error
+	errors      chan error
 	tcpResponse chan string
 )
 
@@ -29,6 +30,8 @@ func main() {
 
 	dbport := os.Getenv("POSTGRES_PORT")
 	port, err := strconv.Atoi(dbport)
+
+	logger := logging.NewLogger()
 	postgres := dao.PostgresBuilder{}.
 		SetUser(os.Getenv("POSTGRES_USER")).
 		SetPassword(os.Getenv("POSTGRES_PASSWORD")).
@@ -36,9 +39,10 @@ func main() {
 		SetPort(port).
 		SetDbName(os.Getenv("POSTGRES_HOST")).
 		Build()
-	svc := service.ServiceBuilder{}.WithPostgres(postgres).
+	svc := service.ServiceBuilder{}.
+		WithLogger(*logger).
+		WithPostgres(postgres).
 		Build()
-
 
 	//http server
 	go func() {
@@ -63,7 +67,7 @@ func main() {
 		}
 	}()
 
-	err = <- errors
+	err = <-errors
 	close(errors)
 	if err != nil {
 		log.Fatal("error: ", err)
@@ -96,5 +100,3 @@ func handleConn(conn net.Conn) {
 		fmt.Println(tcpResponse)
 	}
 }
-
-
