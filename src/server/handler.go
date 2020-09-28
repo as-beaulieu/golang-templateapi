@@ -10,7 +10,7 @@ func heartbeatHandler(svc service.Service) http.HandlerFunc {
 		//var exampleModel models.ExampleModel
 
 		//decoder := json.NewDecoder(r.Body)
-		//if err := decoder.Decode(&raceDay); err != nil {
+		//if err := decoder.Decode(&exampleModel); err != nil {
 		//	respondWithJSON(w, r, http.StatusBadRequest, r.Body)
 		//	return
 		//}
