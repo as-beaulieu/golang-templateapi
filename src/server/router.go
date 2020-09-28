@@ -21,5 +21,12 @@ func makeRouter(svc service.Service) http.Handler {
 	muxRouter.HandleFunc("/message/sample/{text}", getSimpleMessagesBySampleHandler(svc)).Methods("GET")
 	muxRouter.HandleFunc("/message/id/{id}", deleteSimpleMessageByIdHandler(svc)).Methods("DELETE")
 
+	//User for managing users
+	muxRouter.HandleFunc("/user", createUserHandler(svc)).Methods("POST")
+	muxRouter.HandleFunc("/user", getAllUsersHandler(svc)).Methods("GET")
+	muxRouter.HandleFunc("/user/{id}", getUserByIDHandler(svc)).Methods("GET")
+	muxRouter.HandleFunc("/user", updateUserHandler(svc)).Methods("PUT")
+	muxRouter.HandleFunc("/user/{id}", deleteUserByIDHandler(svc)).Methods("DELETE")
+
 	return muxRouter
 }
