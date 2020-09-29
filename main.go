@@ -37,7 +37,6 @@ func main() {
 		SetPassword(os.Getenv("POSTGRES_PASSWORD")).
 		SetHost(os.Getenv("POSTGRES_HOST")).
 		SetPort(port).
-		SetDbName(os.Getenv("POSTGRES_HOST")).
 		Build()
 	svc := service.ServiceBuilder{}.
 		WithLogger(*logger).
