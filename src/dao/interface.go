@@ -1,6 +1,10 @@
 package dao
 
-import "TemplateApi/src/models"
+import (
+	"TemplateApi/src/models"
+	"database/sql"
+	"fmt"
+)
 
 type DAO interface {
 	CreateUser(user models.User) error
@@ -16,6 +20,7 @@ type dao struct {
 	user     string
 	password string
 	dbname   string
+	db       *sql.DB
 }
 
 type PostgresBuilder struct {
@@ -53,5 +58,15 @@ func (pb PostgresBuilder) SetDbName(name string) PostgresBuilder {
 }
 
 func (pb PostgresBuilder) Build() *dao {
+	var err error
+	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
+		pb.host, pb.port, pb.user, pb.password, pb.dbname)
+	pb.db, err = sql.Open("postgres", psqlInfo)
+	if err != nil {
+		panic(err)
+	}
+
+	defer pb.db.Close()
+
 	return &pb.dao
 }

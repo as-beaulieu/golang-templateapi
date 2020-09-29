@@ -1,8 +1,21 @@
 package dao
 
-import "TemplateApi/src/models"
+import (
+	"TemplateApi/src/models"
+	"fmt"
+)
 
 func (d dao) CreateUser(user models.User) error {
+	query := `INSERT INTO users (id, name) VALUES $1, $2;`
+
+	result, err := d.db.Query(query, user.ID, user.Name)
+	if err != nil {
+		return fmt.Errorf("error with insert statement of user in database: %+v", err)
+	}
+
+	if !result.Next() {
+		return fmt.Errorf("error insert statement of user in database failed to save: %+v", err)
+	}
 
 	return nil
 }
