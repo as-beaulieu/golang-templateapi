@@ -1,13 +1,21 @@
 package service
 
-import "TemplateApi/src/models"
+import (
+	"TemplateApi/src/models"
+	"go.uber.org/zap"
+)
 
 func (s service) CreateUser(user models.User) (*models.User, error) {
+	logger := s.logger.Named("s.CreateUser").With(zap.Object("user", user))
+
+	logger.Info("executing creation of user")
 	err := s.postgres.CreateUser(user)
 	if err != nil {
+		logger.Error("error calling dao method for create user", zap.Error(err))
 		return nil, err
 	}
 
+	logger.Info("successful creation of user")
 	return &user, nil
 }
 
