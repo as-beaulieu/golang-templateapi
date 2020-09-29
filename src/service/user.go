@@ -20,20 +20,31 @@ func (s service) CreateUser(user models.User) (*models.User, error) {
 }
 
 func (s service) GetUsers() ([]*models.User, error) {
+	logger := s.logger.Named("s.GetUsers")
+
+	logger.Info("executing get of all users")
+
 	users, err := s.postgres.GetUsers()
 	if err != nil {
+		logger.Error("error calling dao for get all users", zap.Error(err))
 		return nil, err
 	}
 
+	logger.Info("successful get of all users from dao")
 	return users, nil
 }
 
 func (s service) GetUserByID(userID string) (*models.User, error) {
+	logger := s.logger.Named("s.GetUserById").With(zap.String("user_id", userID))
+
+	logger.Info("executing get of user by id")
 	user, err := s.postgres.GetUserById(userID)
 	if err != nil {
+		logger.Error("error calling dao for get of user by id", zap.Error(err))
 		return nil, err
 	}
 
+	logger.Info("successful get of user by Id")
 	return user, nil
 }
 

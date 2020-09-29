@@ -4,7 +4,7 @@ import (
 	"TemplateApi/src/models"
 	"database/sql"
 	"fmt"
-	_ "github.com/lib/pq" //remember to import the concrete implementation of the db driver, and initialize
+	_ "github.com/lib/pq" //remember to import the concrete implementation of the connection driver, and initialize
 )
 
 type DAO interface {
@@ -16,12 +16,12 @@ type DAO interface {
 }
 
 type dao struct {
-	host     string
-	port     int
-	user     string
-	password string
-	dbname   string
-	db       *sql.DB
+	host       string
+	port       int
+	user       string
+	password   string
+	dbname     string
+	connection *sql.DB
 }
 
 type PostgresBuilder struct {
@@ -65,7 +65,7 @@ func (pb PostgresBuilder) Build() *dao {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s sslmode=disable",
 		pb.host, pb.port, pb.user, pb.password)
 
-	pb.db, err = sql.Open("postgres", psqlInfo)
+	pb.connection, err = sql.Open("postgres", psqlInfo)
 	if err != nil {
 		panic(err) //TODO: either import logger into DAO as well, or do something better than panic!
 	}
