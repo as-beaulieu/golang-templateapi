@@ -6,7 +6,10 @@ import (
 )
 
 func (d dao) CreateUser(user models.User) error {
-	query := `INSERT INTO users (id, name) VALUES $1, $2;`
+	query := `INSERT INTO users 
+				(id, name) 
+				VALUES $1, $2
+				ON CONFLICT(id) DO NOTHING;`
 
 	result, err := d.db.Query(query, user.ID, user.Name)
 	if err != nil {
