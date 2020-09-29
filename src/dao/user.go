@@ -8,16 +8,12 @@ import (
 func (d dao) CreateUser(user models.User) error {
 	query := `INSERT INTO users 
 				(id, name) 
-				VALUES $1, $2
+				VALUES ($1, $2)
 				ON CONFLICT(id) DO NOTHING;`
 
-	result, err := d.db.Query(query, user.ID, user.Name)
+	_, err := d.db.Query(query, user.ID, user.Name)
 	if err != nil {
 		return fmt.Errorf("error with insert statement of user in database: %+v", err)
-	}
-
-	if !result.Next() {
-		return fmt.Errorf("error insert statement of user in database failed to save: %+v", err)
 	}
 
 	return nil
