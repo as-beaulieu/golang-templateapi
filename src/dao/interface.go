@@ -67,7 +67,7 @@ func (pb PostgresBuilder) Build() *dao {
 
 	pb.db, err = sql.Open("postgres", psqlInfo)
 	if err != nil {
-		panic(err)
+		panic(err) //TODO: either import logger into DAO as well, or do something better than panic!
 	}
 
 	return &pb.dao

@@ -1,0 +1,123 @@
+{
+	"info": {
+		"_postman_id": "e82f10e7-8f05-4fc1-a410-ec8488fc66f0",
+		"name": "Golang Toolbox API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "BlockChain",
+			"item": [
+				{
+					"name": "ExampleBlockchain",
+					"item": [
+						{
+							"name": "Create BPM Block",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"BPM\": 55\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Blockchain",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "golang-templateApi",
+					"item": [
+						{
+							"name": "User",
+							"item": [
+								{
+									"name": "Create User",
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/user",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"user"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Users",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": ""
+										}
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
