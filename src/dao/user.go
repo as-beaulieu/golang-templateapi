@@ -53,9 +53,11 @@ func (d dao) GetUserById(id string) (*models.User, error) {
 		return nil, err
 	}
 
-	if err := row.Scan(&user.ID, &user.Name); err != nil {
-		log.Println(err)
-		return nil, err
+	for row.Next() {
+		if err := row.Scan(&user.ID, &user.Name); err != nil {
+			log.Println(err)
+			return nil, err
+		}
 	}
 
 	return &user, nil

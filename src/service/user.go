@@ -49,19 +49,30 @@ func (s service) GetUserByID(userID string) (*models.User, error) {
 }
 
 func (s service) UpdateUser(user models.User) (*models.User, error) {
+	logger := s.logger.Named("s.UpdateUser").With(zap.Object("user", user))
+
+	logger.Info("executing update user")
 	err := s.postgres.UpdateUser(user)
+
 	if err != nil {
+		logger.Error("error calling dao for update user", zap.Error(err))
 		return nil, err
 	}
 
+	logger.Info("successful update of user")
 	return nil, nil
 }
 
 func (s service) DeleteUser(userID string) error {
+	logger := s.logger.Named("s.DeleteUser").With(zap.String("user_id", userID))
+
+	logger.Info("executing delete user by id")
 	err := s.postgres.DeleteUser(userID)
 	if err != nil {
+		logger.Error("error calling dao for delete user by id", zap.Error(err))
 		return err
 	}
 
+	logger.Info("successful delete of user by id")
 	return nil
 }
