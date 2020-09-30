@@ -4,7 +4,7 @@ import (
 	"TemplateApi/src/models"
 	"database/sql"
 	"fmt"
-	_ "github.com/lib/pq" //remember to import the concrete implementation of the connection driver, and initialize
+	_ "github.com/lib/pq" //remember to import the concrete implementation of the db driver, and initialize
 )
 
 type DAO interface {
