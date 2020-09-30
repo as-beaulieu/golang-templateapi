@@ -40,6 +40,7 @@ func getAllUsersHandler(svc service.Service) http.HandlerFunc {
 		respondWithJSON(w, r, http.StatusOK, result)
 	}
 }
+
 func getUserByIDHandler(svc service.Service) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
@@ -53,6 +54,7 @@ func getUserByIDHandler(svc service.Service) http.HandlerFunc {
 		respondWithJSON(w, r, http.StatusCreated, result)
 	}
 }
+
 func updateUserHandler(svc service.Service) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var user models.User
@@ -73,6 +75,7 @@ func updateUserHandler(svc service.Service) http.HandlerFunc {
 		respondWithJSON(w, r, http.StatusAccepted, result)
 	}
 }
+
 func deleteUserByIDHandler(svc service.Service) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)

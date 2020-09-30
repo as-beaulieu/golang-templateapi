@@ -102,7 +102,79 @@
 										"method": "GET",
 										"header": [],
 										"url": {
-											"raw": ""
+											"raw": "localhost:8080/user",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"user"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get User By Id",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/user/1234-567-890",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"user",
+												"1234-567-890"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update User",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"1234-567-890\",\n  \"name\": \"changed name\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "localhost:8080/user",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"user"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete User by ID",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/user/1234-567-890",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"user",
+												"1234-567-890"
+											]
 										}
 									},
 									"response": []
