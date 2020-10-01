@@ -69,3 +69,9 @@ database: <blank>
 URL: jdbc:postgresql://localhost:5432/
 ```
 
+Running automation docker from dockerfile
+
+docker build -f Dockerfile.populate-users -t populate-users --build-arg POSTGRES_PORT=${POSTGRES_PORT} .
+
+docker run -rm -i populate-users -e POSTGRES_PORT=5432
+
