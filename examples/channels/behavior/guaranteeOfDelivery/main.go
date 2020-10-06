@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"math/rand"
 	"time"
@@ -207,4 +208,65 @@ func main() {
 	}
 
 	close(waitForTasksChannel) //last piece of work submitted will be received (flushed) before the range is terminated
+
+	//Signal Without Data - Context
+	//When you are on a deadline and if the single worker doesn't finish in time, you are not willing to wait
+
+	duration := 50 * time.Millisecond //how long the worker has to finish task
+	//creates a context goroutine that will close unbuffered channel once duration is met
+	ctx, cancel := context.WithTimeout(context.Background(), duration)
+	defer cancel() //you are responsible for calling cancel function regardless of how things turn out
+	//Can call the cancel() more than once, this is deferred until this function terminates
+
+	contextChannel := make(chan string, 1)
+	go func() { //worker created
+		time.Sleep(time.Duration(rand.Intn(100)) * time.Millisecond) //some work is done
+		contextChannel <- "signal"                                   //worker sends results to channel
+	}()
+
+	select { //wait for worker to send result
+	case p := <-contextChannel: //receive result from worker - worker completed on time
+		fmt.Println("work complete", p)
+	case <-ctx.Done(): //context goroutine closes - worker didn't finish before context closed
+		fmt.Println("moving on")
+	}
+
+	//Conclusion
+	//Use Channels to orchestrate and coordinate goroutines
+	//	Focus on signaling attributes and not the sharing of data
+	//	Signaling with data or without data
+	//	Synchronizing access to shared state can be done easier in other ways
+	//Unbuffered Channels
+	//	Receive happens before the send
+	//	Benefit: 100% guarantee the signal has been received
+	//	Cost: Unknown latency on when the signal will be received
+	//Buffered Channels
+	//	Send happens before the receive
+	//	Benefit: Reduce blocking latency between signaling
+	//	Cost: no guarantee when the signal has been received
+	//		The larger the buffer, the lower the guarantee
+	//		Buffer of 1 can give you one delayed send of guarantee
+	//Closing Channels:
+	//	Close happens before the received(like buffered)
+	//	Signaling without data
+	//	Perfect for Signaling cancellations and deadlines
+	//nil channels
+	//	Send and Receive block
+	//	Turn off signaling
+	//	For rate limiting or short term stoppages
+
+	//If any given Send on a channel CAN cause the sending goroutine to block
+	//	Do not use a buffered channel larger than 1
+	//		Buffers larger than 1 must have reason/measurements
+	//	Must know what happens when the sending goroutine blocks
+	//If any given send on a channel WON'T cause the sending goroutine to block
+	//	You have the exact number of buffers for each send? - Fan Out Pattern
+	//	You have the buffer measured for max capacity? - Drop Pattern
+	//Less is more with buffers
+	//	Don't think about performance when thinking about buffers
+	//	Buffers can help to reduce blocking latency between signaling
+	//		Reducing blocking latency towards zero does not necessarily mean better throughput
+	//		If a buffer of one is giving you good enough throughput then keep it
+	//		Question buffers that are larger than one and measure for size
+	//		Find the smallest buffer possible that provides good enough throughput
 }
