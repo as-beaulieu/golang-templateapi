@@ -1,4 +1,4 @@
-package blockchain
+package blockV2
 
 func (chain *BlockChain) AddBlock(data string) {
 	prevBlock := chain.Blocks[len(chain.Blocks)-1] //get the previous block in the blockchain

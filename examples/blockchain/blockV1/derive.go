@@ -1,4 +1,4 @@
-package blockchain
+package blockV1
 
 import (
 	"bytes"
