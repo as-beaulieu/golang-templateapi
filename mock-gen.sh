@@ -1,0 +1,1 @@
+mockgen -destination=src/mocks/mock_service.go -package=mocks -source=src/service/service.go . Service
