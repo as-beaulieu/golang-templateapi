@@ -68,9 +68,66 @@ v2 loses the blockchain after the application closes - DB will add persistence
 
     - Only accepts bytes or slices of bytes
     
+**NOTE:** Do not change difficulty when values are in DB.
+
+- Validation when reading exiting blocks are set to the static difficulty value when created
+
+- So when difficulty is different to that when the block was made, validation will return that PoW = false
+    
 ## V4
 
 adds transactions to V3
+
+Because blockchain is an open and public database, don't want to store sensitive information inside blockchain
+
+## V5
+
+Add a wallet model to V4
+
+Wallet will be separate from the blockchain package
+
+Wallet is made up of two keys: Private and Public
+
+-   Private key is essentially the identifier for each of the accounts in the blockchain
+
+    - Ecdsa - Elliptical curve digital signing algorithm 
+
+-   Public key is shared between users, and is the address for the account to send and receive data in blockchain
+
+```
+[Private Key] -> [ecdsa] -> [public key]
+                                   |
+                                   V 
+                             [sha 256]    
+                                    |
+                                    V 
+                                [ripemd160]
+                                    |
+                                    V      
+                              [public key hash]
+                              /       \
+                             /         \ 
+                      [sha 256]         |
+                          |             |
+                          V             |
+                      [sha 256]         |
+                          |             |
+                          V             |
+                  [1st 4 bytes]         |
+                          |             |
+                          V             |
+                      [Checksum]        |       [version]
+                               \        |       /
+                                \       |      /
+                                 \      |     /
+                                  \     |    /
+                                   [ Base 58 ]
+                                        |
+                                        V
+                                    [address]
+```
+
+Base 58 was developed with Bitcoin, derivative from the Base64 algorithm
 
 #Blockchain
 

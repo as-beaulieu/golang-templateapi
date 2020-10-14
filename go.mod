@@ -8,7 +8,9 @@ require (
 	github.com/gorilla/mux v1.7.4
 	github.com/joho/godotenv v1.3.0
 	github.com/lib/pq v1.8.0
+	github.com/mr-tron/base58 v1.2.0
 	github.com/onsi/ginkgo v1.14.1
 	github.com/onsi/gomega v1.10.2
 	go.uber.org/zap v1.16.0
+	golang.org/x/crypto v0.0.0-20190510104115-cbcb75029529
 )

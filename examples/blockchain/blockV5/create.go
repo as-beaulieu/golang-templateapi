@@ -1,4 +1,4 @@
-package blockV4
+package blockV5
 
 //CreateBlock takes data and the previous hash from last block and outputs pointer to a new block
 func CreateBlock(transactions []*Transaction, prevHash []byte) *Block {
