@@ -9,6 +9,10 @@ import (
 	"os"
 )
 
+type WeatherReporter interface {
+	GetWeather() (*models.WeatherResponse, error)
+}
+
 func (s service) GetWeather() (*models.WeatherResponse, error) {
 	logger := s.logger.Named("s.GetWeather")
 

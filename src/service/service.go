@@ -2,21 +2,15 @@ package service
 
 import (
 	"TemplateApi/src/dao"
-	"TemplateApi/src/models"
 	"go.uber.org/zap"
 )
 
 type Service interface {
 	//PublicFunctionName(input) (output, error)
-	Heartbeat() (*models.HeartbeatResponse, error)
-	GetWeather() (*models.WeatherResponse, error)
-	CreateSimpleMessage(message models.SimpleMessage) (*models.SimpleMessageResponse, error)
-
-	CreateUser(user models.User) (*models.User, error)
-	GetUsers() ([]*models.User, error)
-	GetUserByID(userID string) (*models.User, error)
-	UpdateUser(user models.User) (*models.User, error)
-	DeleteUser(userID string) error
+	HealthReporter
+	Messenger
+	UserOperator
+	WeatherReporter
 }
 
 type service struct {

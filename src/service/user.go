@@ -5,6 +5,14 @@ import (
 	"go.uber.org/zap"
 )
 
+type UserOperator interface {
+	CreateUser(user models.User) (*models.User, error)
+	GetUsers() ([]*models.User, error)
+	GetUserByID(userID string) (*models.User, error)
+	UpdateUser(user models.User) (*models.User, error)
+	DeleteUser(userID string) error
+}
+
 func (s service) CreateUser(user models.User) (*models.User, error) {
 	logger := s.logger.Named("s.CreateUser").With(zap.Object("user", user))
 
