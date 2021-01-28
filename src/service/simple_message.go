@@ -8,6 +8,10 @@ import (
 	"os"
 )
 
+type Messenger interface {
+	CreateSimpleMessage(message models.SimpleMessage) (*models.SimpleMessageResponse, error)
+}
+
 func (s service) CreateSimpleMessage(message models.SimpleMessage) (*models.SimpleMessageResponse, error) {
 	newFile, err := os.Create("test.txt")
 	if err != nil {

@@ -5,6 +5,10 @@ import (
 	"time"
 )
 
+type HealthReporter interface {
+	Heartbeat() (*models.HeartbeatResponse, error)
+}
+
 func (s service) Heartbeat() (*models.HeartbeatResponse, error) {
 	return &models.HeartbeatResponse{
 		Message: "API Running",
