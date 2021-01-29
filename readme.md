@@ -1,3 +1,18 @@
+# Mocks
+
+Mockgen is being used to automate mocks for testing
+
+`./mock-gen.sh`
+
+mock-gen shell is standardizing locations and interfaces targeted for mocks
+
+`Be advised` - mockgen must be pointed to lowest level interfaces for mocking. 
+When pointed to an interface compositioned from interfaces will give an error
+
+```
+Loading input failed: src/service/service.go:10:2: unknown embedded interface HealthReporter
+```
+
 # Postgres Container
 
 Pull down an image for the latest stable release of Postgres

@@ -1,1 +1,1 @@
-mockgen -destination=src/mocks/mock_service.go -package=mocks -source=src/service/service.go . Service
+mockgen -destination=src/mocks/mock_heartbeat.go -package=mocks -source=src/service/heartbeat.go . HealthReporter
