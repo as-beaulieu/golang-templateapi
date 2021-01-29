@@ -6,6 +6,14 @@ import (
 	"log"
 )
 
+type UserArchiver interface {
+	CreateUser(user models.User) error
+	GetUsers() ([]*models.User, error)
+	GetUserById(id string) (*models.User, error)
+	UpdateUser(user models.User) error
+	DeleteUser(id string) error
+}
+
 func (d dao) CreateUser(user models.User) error {
 	query := `INSERT INTO users 
 				(id, name) 

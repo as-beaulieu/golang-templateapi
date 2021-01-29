@@ -1,18 +1,13 @@
 package dao
 
 import (
-	"TemplateApi/src/models"
 	"database/sql"
 	"fmt"
 	_ "github.com/lib/pq" //remember to import the concrete implementation of the db driver, and initialize
 )
 
 type DAO interface {
-	CreateUser(user models.User) error
-	GetUsers() ([]*models.User, error)
-	GetUserById(id string) (*models.User, error)
-	UpdateUser(user models.User) error
-	DeleteUser(id string) error
+	UserArchiver
 }
 
 type dao struct {
