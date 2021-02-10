@@ -7,30 +7,31 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"testing"
-	"time"
 )
 
-func TestService_CreateUser(t *testing.T) {
+func TestUser(t *testing.T) {
+	RegisterFailHandler(Fail)
+}
+
+var _ = Describe("User", func() {
+	defer GinkgoRecover()
 	Describe("testing CreateUser", func() {
-		controller := gomock.NewController(t)
-		serviceMock := mocks.NewMockService(controller)
+		userMock := mocks.NewMockUserOperator(gomock.NewController(GinkgoT()))
 		Context("successful creation of user", func() {
-			serviceMock.
+			userMock.
 				EXPECT().
-				CreateUser(gomock.Eq(models.User{})).
+				CreateUser(gomock.AssignableToTypeOf(models.User{})).
 				DoAndReturn(func(user models.User) (*models.User, error) {
-					time.Sleep(1 * time.Second)
 					return &user, nil
-				}).
-				AnyTimes()
+				})
 			When("when CreateUser is called with a valid request", func() {
 				correctRequest := models.User{
 					ID:   "1234",
 					Name: "name",
 				}
-				result, err := serviceMock.CreateUser(correctRequest)
+				result, err := userMock.CreateUser(correctRequest)
 				It("returns a success with no errors", func() {
-					Expect(err).To(nil)
+					Expect(err).To(BeNil())
 				})
 				It("returns the message in the response", func() {
 					Expect(result.ID).To(Equal(correctRequest.ID))
@@ -39,4 +40,4 @@ func TestService_CreateUser(t *testing.T) {
 			})
 		})
 	})
-}
+})
