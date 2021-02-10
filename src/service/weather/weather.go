@@ -1,7 +1,8 @@
-package service
+package weather
 
 import (
 	"TemplateApi/src/models"
+	"TemplateApi/src/service"
 	"encoding/json"
 	"fmt"
 	"go.uber.org/zap"
@@ -9,12 +10,16 @@ import (
 	"os"
 )
 
+type local_service struct {
+	*service.TemplateService
+}
+
 type WeatherReporter interface {
 	GetWeather() (*models.WeatherResponse, error)
 }
 
-func (s service) GetWeather() (*models.WeatherResponse, error) {
-	logger := s.logger.Named("s.GetWeather")
+func (s *local_service) GetWeather() (*models.WeatherResponse, error) {
+	logger := s.Logger.Named("s.GetWeather")
 
 	logger.Info("Calling for weather report")
 

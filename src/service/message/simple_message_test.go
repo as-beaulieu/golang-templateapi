@@ -1,7 +1,8 @@
-package service
+package message
 
 import (
 	"TemplateApi/src/models"
+	service2 "TemplateApi/src/service"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"testing"
@@ -9,14 +10,14 @@ import (
 
 func TestService_CreateSimpleMessage(t *testing.T) {
 	Describe("testing CreateSimpleMessage", func() {
-		service := ServiceBuilder{}.Build()
+		service := service2.ServiceBuilder{}.Build()
 		Context("successful creation of simple messages", func() {
 			When("when CreateSimpleMessage is called with a valid message", func() {
 				correctMessage := models.SimpleMessage{
 					ID:      "12345-2231-12312-11",
 					Message: "This is a valid message",
 				}
-				result, err := service.CreateSimpleMessage(correctMessage)
+				result, err := service2.CreateSimpleMessage(correctMessage)
 				It("returns a success with no errors", func() {
 					Expect(err).To(nil)
 					Expect(result.Error).To(nil)

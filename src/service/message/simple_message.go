@@ -1,18 +1,23 @@
-package service
+package message
 
 import (
 	"TemplateApi/src/models"
+	"TemplateApi/src/service"
 	"bytes"
 	"encoding/gob"
 	"fmt"
 	"os"
 )
 
+type local_service struct {
+	*service.TemplateService
+}
+
 type Messenger interface {
 	CreateSimpleMessage(message models.SimpleMessage) (*models.SimpleMessageResponse, error)
 }
 
-func (s service) CreateSimpleMessage(message models.SimpleMessage) (*models.SimpleMessageResponse, error) {
+func (s local_service) CreateSimpleMessage(message models.SimpleMessage) (*models.SimpleMessageResponse, error) {
 	newFile, err := os.Create("test.txt")
 	if err != nil {
 		fmt.Println("failure creating new file", newFile.Name())
