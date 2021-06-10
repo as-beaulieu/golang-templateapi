@@ -4,6 +4,7 @@ import (
 	"TemplateApi/src/service"
 	"encoding/json"
 	"fmt"
+	"github.com/gorilla/handlers"
 	"net/http"
 	"os"
 	"time"
@@ -18,12 +19,17 @@ func RunHttpServer(svc service.Service) error {
 	}
 	fmt.Println("Listening on ", httpAddr)
 
+	// Where ORIGIN_ALLOWED is like `scheme://dns[:port]`, or `*` (insecure)
+	headersOk := handlers.AllowedHeaders([]string{"X-Requested-With"})
+	originsOk := handlers.AllowedOrigins([]string{os.Getenv("ORIGIN_ALLOWED")})
+	methodsOk := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
+
 	server := &http.Server{
-		Addr:	":" + httpAddr,
-		Handler: muxRouter,
-		ReadTimeout: 30 * time.Second,
-		WriteTimeout: 30 * time.Second,
-		IdleTimeout: 0,
+		Addr:           ":" + httpAddr,
+		Handler:        handlers.CORS(originsOk, headersOk, methodsOk)(muxRouter),
+		ReadTimeout:    30 * time.Second,
+		WriteTimeout:   30 * time.Second,
+		IdleTimeout:    0,
 		MaxHeaderBytes: 1 << 20,
 	}
 	if err := server.ListenAndServe(); err != nil {

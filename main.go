@@ -6,6 +6,7 @@ import (
 	"TemplateApi/src/server"
 	"TemplateApi/src/service"
 	"bufio"
+	"flag"
 	"fmt"
 	"github.com/joho/godotenv"
 	"io"
@@ -24,6 +25,22 @@ func main() {
 	err := godotenv.Load()
 	example := os.Getenv("EXAMPLE")
 	fmt.Println(example)
+
+	_ = flag.String("setCondition", os.Getenv("setCondition"), "Use -setCondition=one,two,three to pass in an example flag")
+	_ = flag.Bool("safety", true, "set -safety=false to disengage safety. Otherwise defaults to true")
+
+	flag.Parse() //remove this if other flags need to be parsed. Golang only likes one flag.Parse()
+
+	condition := flag.Lookup("setCondition").Value.(flag.Getter).Get().(string)
+	safety := flag.Lookup("safety").Value.(flag.Getter).Get().(bool)
+
+	if condition != "" {
+		fmt.Println("condition:", condition)
+	}
+	fmt.Println("safety:", safety)
+	if safety == false {
+		fmt.Println("Safety Disengaged")
+	}
 
 	errors = make(chan error)
 	tcpResponse = make(chan string)
