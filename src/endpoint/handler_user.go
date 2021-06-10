@@ -1,4 +1,4 @@
-package server
+package endpoint
 
 import (
 	"TemplateApi/src/models"
@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func createUserHandler(svc service.Service) http.HandlerFunc {
+func CreateUserHandler(svc service.Service) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var user models.User
 
@@ -29,7 +29,7 @@ func createUserHandler(svc service.Service) http.HandlerFunc {
 	}
 }
 
-func getAllUsersHandler(svc service.Service) http.HandlerFunc {
+func GetAllUsersHandler(svc service.Service) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		result, err := svc.GetUsers()
 		if err != nil {
@@ -41,7 +41,7 @@ func getAllUsersHandler(svc service.Service) http.HandlerFunc {
 	}
 }
 
-func getUserByIDHandler(svc service.Service) http.HandlerFunc {
+func GetUserByIDHandler(svc service.Service) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		id := vars["id"]
@@ -55,7 +55,7 @@ func getUserByIDHandler(svc service.Service) http.HandlerFunc {
 	}
 }
 
-func updateUserHandler(svc service.Service) http.HandlerFunc {
+func UpdateUserHandler(svc service.Service) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var user models.User
 
@@ -76,7 +76,7 @@ func updateUserHandler(svc service.Service) http.HandlerFunc {
 	}
 }
 
-func deleteUserByIDHandler(svc service.Service) http.HandlerFunc {
+func DeleteUserByIDHandler(svc service.Service) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		id := vars["id"]
