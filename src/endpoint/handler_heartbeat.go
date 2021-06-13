@@ -1,11 +1,11 @@
-package server
+package endpoint
 
 import (
 	"TemplateApi/src/service"
 	"net/http"
 )
 
-func heartbeatHandler(svc service.Service) http.HandlerFunc {
+func HeartbeatHandler(svc service.Service) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		//var exampleModel models.ExampleModel
 
@@ -22,16 +22,5 @@ func heartbeatHandler(svc service.Service) http.HandlerFunc {
 			return
 		}
 		respondWithJSON(w, r, http.StatusCreated, heartbeatResponse)
-	}
-}
-
-func getWeatherHandler(svc service.Service) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		weatherResponse, err := svc.GetWeather()
-		if err != nil {
-			respondWithJSON(w, r, 500, r.Body)
-			return
-		}
-		respondWithJSON(w, r, http.StatusOK, weatherResponse)
 	}
 }

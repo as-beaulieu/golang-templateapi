@@ -1,4 +1,4 @@
-package server
+package endpoint
 
 import (
 	"TemplateApi/src/models"
@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-func createSimpleMessageHandler(svc service.Service) http.HandlerFunc {
+func CreateSimpleMessageHandler(svc service.Service) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var messageRequest models.SimpleMessageRequest
 
@@ -39,14 +39,14 @@ func createSimpleMessageHandler(svc service.Service) http.HandlerFunc {
 	}
 }
 
-func getSimpleMessageByIdHandler(svc service.Service) http.HandlerFunc {
+func GetSimpleMessageByIdHandler(svc service.Service) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {}
 }
 
-func getSimpleMessagesBySampleHandler(svc service.Service) http.HandlerFunc {
+func GetSimpleMessagesBySampleHandler(svc service.Service) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {}
 }
 
-func deleteSimpleMessageByIdHandler(svc service.Service) http.HandlerFunc {
+func DeleteSimpleMessageByIdHandler(svc service.Service) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {}
 }
